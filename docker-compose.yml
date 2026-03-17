@@ -28,5 +28,10 @@ services:
     depends_on:
       - postgres_db # Pastikan database menyala duluan sebelum aplikasi Node.js
 
+  cf_tunnel:
+    image: cloudflare/cloudflare:latest
+    restart: always
+    command: tunnel --no-autoupdate run --token <TOKEN KAMU>
+
 volumes:
   pgdata:
