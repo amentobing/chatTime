@@ -12,6 +12,7 @@ import authRoutes from "./routes/authRoutes.js";
 import msgRoutes from "./routes/msgRoutes.js";
 import csRoutes from "./routes/csRoutes.js";
 import devRouters from "./routes/devRoutes.js";
+import usrRouters from "./routes/usrRoutes.js";
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ io.on("connection", (socket: SocketAuth) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/msg", msgRoutes);
 app.use("/api/conversation", csRoutes);
+app.use("/api/user", usrRouters);
 app.use("/dev/api/", devRouters);
 
 const port = 3456;
