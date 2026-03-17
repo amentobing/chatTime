@@ -29,7 +29,7 @@ services:
       - postgres_db # Pastikan database menyala duluan sebelum aplikasi Node.js
 
   cf_tunnel:
-    image: cloudflare/cloudflare:latest
+    image: cloudflare/cloudflared:latest
     restart: always
     command: tunnel --no-autoupdate run --token <TOKEN KAMU>
 
