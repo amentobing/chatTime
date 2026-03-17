@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  # 1. SERVER DATABASE (PostgreSQL)
+  postgres_db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: chattime_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Agar data chat tidak hilang saat server restart
+
+  # 2. SERVER APLIKASI (Node.js)
+  app:
+    build: .
+    restart: always
+    ports:
+      - "3456:3456"
+    environment:
+      # INI SANGAT KRUSIAL: Perhatikan URL-nya.
+      # Kita tidak lagi memakai "localhost", tapi memakai nama service "postgres_db"
+      DATABASE_URL: "postgresql://admin:password123@postgres_db:5432/chattime_db?schema=public"
+      JWT_SECRET: "hidupJokowi"
+    depends_on:
+      - postgres_db # Pastikan database menyala duluan sebelum aplikasi Node.js
+
+volumes:
+  pgdata:
